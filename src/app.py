@@ -3,21 +3,17 @@ import werkzeug
 
 app = Flask(__name__)
 
-# 1. Pemicu Gitleaks (Secret Leakage / Information Disclosure)
-AWS_SECRET_KEY = "AKIAIMZAMB1AEXAMPLE1234567890abcdefghij"
-DB_PASSWORD = "super_secret_password_123"
-
 @app.route('/')
 def home():
-    return "<h1>DevSecOps Pipeline - VULNERABLE KONDISI BEFORE</h1>"
+    return "<h1>DevSecOps Secure Pipeline Demo - MUZDEV</h1>"
 
 @app.route('/execute')
 def execute():
-    # 2. Pemicu Bandit (Malicious Commit / Code Injection / Tampering)
-    # Menggunakan fungsi eval() dari input query parameter secara buta
-    cmd = request.args.get('cmd', 'print("Hello")')
-    hasil = eval(cmd) 
-    return f"Hasil Eksekusi: {hasil}"
+    cmd = request.args.get('cmd', 'Hello')
+    if cmd == 'Hello':
+        return "Hasil Eksekusi: Hello World"
+    else:
+        return "Hasil Eksekusi: Perintah tidak diizinkan demi keamanan sistem."
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
